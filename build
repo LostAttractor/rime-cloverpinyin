@@ -125,8 +125,9 @@ cat "$SHELL_FOLDER/src/file_list.txt" | while read line; do
 	fi
 done
 extract 360万中文词库+词性+词频.zip || exit
-ln -sf rime-essay/essay.txt essay.txt || exit
-ln -sf rime-pinyin-simp/pinyin_simp.dict.yaml pinyin_simp.dict.yaml || exit
+cd ../
+ln -sf ../rime-essay/essay.txt cache/essay.txt || exit
+ln -sf ../rime-pinyin-simp/pinyin_simp.dict.yaml cache/pinyin_simp.dict.yaml || exit
 
 # 生成符号列表
 cd rime-symbols || exit
@@ -136,16 +137,18 @@ cd opencc || exit
 cd ../.. || exit
 
 # 生成符号词汇
-cat */opencc/*.txt | opencc -c t2s.json | uniq > symbols.txt
+cat */opencc/*.txt | opencc -c t2s.json | uniq > cache/symbols.txt
 
 # 开始生成词典
+cd cache || exit
 ../src/clover-dict-gen --minfreq=$minfreq || exit
-for i in THUOCL/data/THUOCL_*; do
-	echo "转换 $i"
-	../src/thuocl2rime $i || exit
-done
+# for i in ../THUOCL/data/THUOCL_*; do
+# 	echo "转换 $i"
+# 	../src/thuocl2rime $i || exit
+# done
+cp ../THUOCL-fix/data/THUOCL_*.dict.yaml .
 cp ../src/sogou_new_words.dict.yaml .
-./libscel/scel.py >> sogou_new_words.dict.yaml || exit
+../libscel/scel.py >> sogou_new_words.dict.yaml || exit
 
 # 生成 data 目录
 mkdir -p ../data || exit
@@ -156,8 +159,8 @@ cd ../data
 
 # 生成 opencc 目录
 mkdir -p opencc
-cp ../cache/rime-emoji/opencc/* opencc
-cp ../cache/rime-symbols/opencc/* opencc
+cp ../rime-emoji/opencc/* opencc
+cp ../rime-symbols/opencc/* opencc
 
 echo 开始构建部署二进制
 rime_deployer --compile clover.schema.yaml . /usr/share/rime-data || exit
