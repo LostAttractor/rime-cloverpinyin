@@ -1,0 +1,4 @@
+opencc
+jieba
+pypinyin
+requests
