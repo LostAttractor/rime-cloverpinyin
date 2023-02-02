@@ -93,6 +93,10 @@ extract(){
 
 
 cd $SHELL_FOLDER
+
+# 删除之前构建的内容
+rm -R data
+# 创建cache文件夹
 mkdir -p cache || exit
 cd cache
 
@@ -141,12 +145,15 @@ cat */opencc/*.txt | opencc -c t2s.json | uniq > cache/symbols.txt
 
 # 开始生成词典
 cd cache || exit
+# Clover字典
 ../src/clover-dict-gen --minfreq=$minfreq || exit
+# THUOCL
 # for i in ../THUOCL/data/THUOCL_*; do
 # 	echo "转换 $i"
 # 	../src/thuocl2rime $i || exit
 # done
 cp ../THUOCL-fix/data/THUOCL_*.dict.yaml .
+# Sogou词库
 cp ../src/sogou_new_words.dict.yaml .
 ../libscel/scel.py >> sogou_new_words.dict.yaml || exit
 
@@ -162,7 +169,11 @@ mkdir -p opencc
 cp ../rime-emoji/opencc/* opencc
 cp ../rime-symbols/opencc/* opencc
 
-echo 开始构建部署二进制
-rime_deployer --compile clover.schema.yaml . /usr/share/rime-data || exit
-rm -rf build/*.txt
+# echo 开始构建部署二进制
+# rime_deployer --compile clover.schema.yaml . /usr/share/rime-data || exit
 
+# 离开data目录
+cd ../
+
+# 清除缓存
+rm -R cache
