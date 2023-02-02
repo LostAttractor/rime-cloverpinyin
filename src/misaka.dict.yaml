@@ -1,11 +1,11 @@
 
-name: clover
+name: misaka
 version: "1"
 sort: by_weight
 
 import_tables:
-  - clover.base
-  - clover.phrase
+  - misaka.base
+  - misaka.phrase
   - THUOCL_animal
   - THUOCL_caijing
   - THUOCL_car

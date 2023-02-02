@@ -145,8 +145,8 @@ cat */opencc/*.txt | opencc -c t2s.json | uniq > cache/symbols.txt
 
 # 开始生成词典
 cd cache || exit
-# Clover字典
-../src/clover-dict-gen --minfreq=$minfreq || exit
+# Misaka字典
+../src/misaka-dict-gen --minfreq=$minfreq || exit
 # THUOCL
 # for i in ../THUOCL/data/THUOCL_*; do
 # 	echo "转换 $i"
@@ -160,7 +160,7 @@ cp ../src/sogou_new_words.dict.yaml .
 # 生成 data 目录
 mkdir -p ../data || exit
 cp ../src/*.yaml ../data || exit
-mv clover.*.yaml THUOCL_*.yaml sogou_new_words.dict.yaml ../data || exit
+mv misaka.*.yaml THUOCL_*.yaml sogou_new_words.dict.yaml ../data || exit
 
 cd ../data
 
@@ -170,7 +170,7 @@ cp ../rime-emoji/opencc/* opencc
 cp ../rime-symbols/opencc/* opencc
 
 # echo 开始构建部署二进制
-# rime_deployer --compile clover.schema.yaml . /usr/share/rime-data || exit
+# rime_deployer --compile misaka.schema.yaml . /usr/share/rime-data || exit
 
 # 离开data目录
 cd ../
