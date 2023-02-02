@@ -3,12 +3,13 @@
 
 schema:
   schema_id: clover
-  name: 🍀️四叶草简体拼音
+  name: 🍥小鱼板拼音输入法
   version: "1.0.0"
   author:
+    - ChaosAttractor - https://lostattractor.net
     - fkxxyz - https://www.fkxxyz.com
   description: |
-    由🍀️四叶草亲自定制，特点：
+    由CA基于🍀️四叶草简体拼音输入法修改而来，特点：
       1. 结合搜狗输入法的输入习惯
       2. 默认开启 emoji 表情支持
       3. 加上很多特殊符号的输入支持
